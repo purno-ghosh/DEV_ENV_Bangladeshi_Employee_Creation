@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Dynamic Browser Testing">
+    <test name="Run on Chrome">
+        <parameter name="browser" value="chrome" />
+        <parameter name="url_env" value="Test" />
+        <classes>
+            <class name="DEV_ENV_Bangladeshi_Employee_Create" />
+        </classes>
+    </test>
+
+</suite>
