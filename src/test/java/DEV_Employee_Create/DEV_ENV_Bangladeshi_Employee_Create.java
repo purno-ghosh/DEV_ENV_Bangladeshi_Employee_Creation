@@ -1,8 +1,7 @@
 package DEV_Employee_Create;
 import Setup_All.Setup;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,9 +30,6 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
     @FindBy(xpath = "//span[span[text()='Add Employee']]")
     WebElement Add_Employee;
 
-    @FindBy(xpath = "//h2/span[text()=\"Add Employee\"]")
-    WebElement get_Add_Employee;
-
     @FindBy(xpath = "//mat-select")
     WebElement Salutation;
 
@@ -42,8 +38,50 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
     @FindBy(xpath = "//div/input[@name=\"FirstName\"]")
     WebElement userfirstName;
 
-    @FindBy(xpath = "//div/input[@name=\"FirstName\"]")
+    @FindBy(xpath = "//div/input[@name=\"LastName\"]")
     WebElement userlastName;
+
+    @FindBy(xpath = "//button[@aria-label='Open calendar']")
+    WebElement joiningDate;
+
+    @FindBy(xpath = "//mat-select[@aria-label='Employment Location']")
+    WebElement Employment_Location;
+
+    @FindBy(xpath = "//span[normalize-space()='Bangladesh']")
+    WebElement Select_Employment_Location;
+
+
+    @FindBy(xpath = "//mat-select[@aria-label=\"Unit\"]")
+    WebElement clickUnit;
+
+    @FindBy(xpath = "//input[@formcontrolname=\"Designation\"]")
+    WebElement Designation;
+
+
+    @FindBy(xpath = "//mat-select[@formcontrolname=\"Sex\"]")
+    WebElement gender;
+
+    @FindBy(xpath = "//span[normalize-space()='Male']")
+    WebElement selectgender;
+
+
+    @FindBy(xpath = "//input[@formcontrolname=\"EmployeeID\"]")
+    WebElement EmployeeID;
+
+
+
+    @FindBy(xpath = "//mat-select[@formcontrolname=\"LanguagePreference\"]")
+    WebElement LanguagePreference;
+
+    @FindBy(xpath = "//span[normalize-space(text())='English']")
+    WebElement selectLanguagePreference;
+
+    @FindBy(xpath = "//button[span[text()=' Next ']]")
+    WebElement Next;
+
+
+    @FindBy(xpath = "(//input[@formcontrolname='Email'])[1]")
+    WebElement enteruseremail;
 
     public DEV_ENV_Bangladeshi_Employee_Create(WebDriver driver) {
         this.driver = driver;
@@ -51,7 +89,7 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
         PageFactory.initElements(driver, this);
     }
 
-public void create_employee() throws IOException {
+public void create_employee() throws IOException, InterruptedException {
     ZoneId bangladeshZone = ZoneId.of("Asia/Dhaka");
     ZonedDateTime bangladeshDateTime = ZonedDateTime.now(bangladeshZone);
     String testData = bangladeshDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yy-HH-mm"));
@@ -71,6 +109,46 @@ public void create_employee() throws IOException {
 
     Salutation.click();
     Salutation_select.click();
+
+    userfirstName.sendKeys("AutoTest");
+    userlastName.sendKeys(testData);
+
+    WebElement element = driver.findElement(By.xpath("//mat-select[@formcontrolname='LanguagePreference']"));
+    Actions actions = new Actions(driver);
+    actions.moveToElement(element).perform();
+
+    Thread.sleep(2000);
+
+    joiningDate.click();
+    int dateonly = Integer.parseInt(testData.split("-")[0]);
+    System.out.println(dateonly);
+    driver.findElement(By.xpath("//div[normalize-space()='" + dateonly + "']")).click();
+    Employment_Location.click();
+
+    Select_Employment_Location.click();
+
+    clickUnit.click();
+
+    WebElement retailOption = driver.findElement(By.xpath("//span[normalize-space()='Retail']"));
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", retailOption);
+    Thread.sleep(2000);
+    retailOption.click();
+    Thread.sleep(2000);
+    Designation.sendKeys(testData);
+
+    gender.click();
+    selectgender.click();
+    EmployeeID.sendKeys(testData);
+    LanguagePreference.click();
+    selectLanguagePreference.click();
+    Thread.sleep(2000);
+    WebElement dateOfBirthInput = driver.findElement(By.xpath("//input[@formcontrolname='DateOfBirth']"));
+    Actions actions2 = new Actions(driver);
+    actions2.moveToElement(dateOfBirthInput).perform();
+    Next.click();
+    enteruseremail.sendKeys(useremail);
+
+
 
 
 
