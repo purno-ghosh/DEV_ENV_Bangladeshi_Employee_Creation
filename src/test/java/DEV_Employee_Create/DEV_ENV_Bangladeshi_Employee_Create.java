@@ -9,24 +9,18 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
 
     private WebDriver driver;
     private Setup setup;
-
     @FindBy(xpath = "//input[@name=\"email\"]")
     WebElement email_field;
-
     @FindBy(xpath = "//input[@name=\"password\"]")
     WebElement password_field;
-
     @FindBy(xpath = "//span[text()=\" Login \"]")
     WebElement login_click;
-
 
     public DEV_ENV_Bangladeshi_Employee_Create(WebDriver driver) {
         this.driver = driver;
         this.setup = new Setup();
         PageFactory.initElements(driver, this);
     }
-
-
 
 public void create_employee(){
 
@@ -38,12 +32,4 @@ public void create_employee(){
     login_click.click();
 
 }
-
-
-
-
-
-
-
-
 }

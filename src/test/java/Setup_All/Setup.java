@@ -2,13 +2,12 @@ package Setup_All;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
 import java.util.Properties;
 
@@ -18,28 +17,45 @@ public class Setup {
     public static Properties configProperties;
 
     @BeforeClass
-    public void setup() throws IOException{
+    public void setup() throws IOException {
+        // Remove static declaration of driver
         configProperties = new Properties();
-        File file = new File("config.properties");
-        FileInputStream fileInp = new FileInputStream(file);
-        configProperties.load(fileInp);
+        InputStream fileInput = getClass().getClassLoader().getResourceAsStream("config.properties");
 
+        if (fileInput == null) {
+            throw new IOException("config.properties file not found in src/test/resources!");
+        }
+
+        configProperties.load(fileInput);
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-        driver=new ChromeDriver();
-        String baseUrl=configProperties.getProperty("url");
+        String baseUrl = configProperties.getProperty("url");
         driver.get(baseUrl);
     }
 
-    @AfterClass
-    public  void close(){
-        driver.quit();
 
+    @AfterMethod
+    public void takeScreenshot(ITestResult result) throws IOException {
+        Utils utils = new Utils(driver);  // Initialize your custom Utils class for taking screenshots
+        if (ITestResult.FAILURE == result.getStatus()) {
+            // Take screenshot if the test fails
+            utils.takeScreenShot("failure");
+        } else if (ITestResult.SUCCESS == result.getStatus()) {
+            // Take screenshot if the test passes
+            utils.takeScreenShot("success");
+        }
     }
 
+
+//    @AfterClass
+//    public void close() {
+//        if (driver != null) {
+//            driver.quit();
+//        }
+//    }
 
     public static String getConfigData(String propertyName) {
         return configProperties.getProperty(propertyName);
     }
-
 }

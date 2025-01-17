@@ -1,14 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Dynamic Browser Testing">
-
-    <test name="Run on Chrome">
-        <parameter name="browser" value="chrome" />
-        <parameter name="url_env" value="Test" />
-
-        <classes>
-            <class name="DEV_Employee_Create.DEV_ENV_Bangladeshi_Employee_Create_Runner" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<suite name="Hr Autmation">
+    <test name="Admin Login">
+        <classes >
+            <class name="DEV_Employee_Create.DEV_ENV_Bangladeshi_Employee_Create_Runner">
+            </class>
         </classes>
     </test>
-
 </suite>
