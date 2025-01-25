@@ -83,6 +83,32 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
     @FindBy(xpath = "(//input[@formcontrolname='Email'])[1]")
     WebElement enteruseremail;
 
+    @FindBy(xpath = "//mat-select[@formcontrolname='Country']")
+    WebElement countryField;
+    @FindBy(xpath = "//mat-option/span[normalize-space()='Bangladesh']")
+    WebElement countryselect;
+
+
+
+    @FindBy(xpath = "//mat-select[@formcontrolname='Canton']")
+    WebElement cantonField;
+
+    @FindBy(xpath = "(//mat-option)[1]")
+    WebElement selectCanton;
+    @FindBy(xpath = "//input[@name=\"City\"]")
+    WebElement cityfield;
+
+    @FindBy(xpath = "//input[@name=\"ZipCode\"]")
+    WebElement zipfield;
+
+    @FindBy(xpath = "//input[@name=\"EmergencyContactName\"]")
+    WebElement EmergencyContactNamefield;
+    @FindBy(xpath = "//input[@placeholder=\"Telephone Number *\"]")
+    WebElement Telephone_Number;
+    @FindBy(xpath = "//input[@name=\"EmergencyContactRelationship\"]")
+    WebElement EmergencyContactRelations;
+
+
     public DEV_ENV_Bangladeshi_Employee_Create(WebDriver driver) {
         this.driver = driver;
         this.setup = new Setup();
@@ -147,6 +173,23 @@ public void create_employee() throws IOException, InterruptedException {
     actions2.moveToElement(dateOfBirthInput).perform();
     Next.click();
     enteruseremail.sendKeys(useremail);
+    countryField.click();
+    countryselect.click();
+    cantonField.click();
+    selectCanton.click();
+    cityfield.sendKeys(testData);
+    zipfield.sendKeys(testData);
+
+    WebElement element3 = driver.findElement(By.xpath("//span[text()=\"Email (Business)\"]"));
+    Actions actions3 = new Actions(driver);
+    actions3.moveToElement(element3).perform();
+
+    EmergencyContactNamefield.sendKeys("Father");
+    EmergencyContactRelations.sendKeys("Father");
+    Thread.sleep(2000);
+    Telephone_Number.sendKeys("+880 1629889679");
+    Thread.sleep(2000);
+    Next.click();
 
 
 
