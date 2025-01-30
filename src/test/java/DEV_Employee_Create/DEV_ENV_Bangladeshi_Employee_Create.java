@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -108,6 +109,51 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
     @FindBy(xpath = "//input[@name=\"EmergencyContactRelationship\"]")
     WebElement EmergencyContactRelations;
 
+    @FindBy (xpath = "(//mat-datepicker-toggle/button[@type=\"button\"])[3]")
+    WebElement Hr_Start_button;
+    @FindBy (xpath = "//button/div[normalize-space(text())=\"1\"]")
+    WebElement Click_Hr_Start_Date;
+
+    @FindBy (xpath = "(//mat-datepicker-toggle/button[@type=\"button\"])[4]")
+    WebElement Hr_End_button;
+
+    @FindBy (xpath = "//button[@aria-label=\"Next month\"]")
+    WebElement nextMonthbutton;
+
+    @FindBy (xpath = "//mat-select[@formcontrolname=\"EmploymentType\"]")
+    WebElement Employment_dropdown;
+
+
+    @FindBy (xpath = "//mat-option[contains(@class, 'mat-option')]//span[normalize-space()='Full Time']")
+    WebElement Select_Employment_Type;
+
+    @FindBy(xpath = "//button[span[normalize-space(text())='Monday']]")
+    WebElement Monday_Button;
+
+    @FindBy(xpath = "//button[span[normalize-space(text())='Tuesday']]")
+    WebElement Tuesday_Button;
+
+    @FindBy(xpath = "//button[span[normalize-space(text())='Wednesday']]")
+    WebElement Wednesday_Button;
+
+    @FindBy(xpath = "//button[span[normalize-space(text())='Thursday']]")
+    WebElement Thursday_Button;
+
+    @FindBy(xpath = "//button[span[normalize-space(text())='Sunday']]")
+    WebElement Sunday_Button;
+
+    @FindBy(xpath = "//span[@class='mat-checkbox-label'][contains(text(), 'Annual Leave')]")
+    WebElement Annual_Leave;
+
+    @FindBy(xpath = "//span[@class='mat-checkbox-label'][contains(text(), 'Paternity Leave')]")
+    WebElement Paternity_Leave;
+
+    @FindBy(xpath = "//span[@class='mat-checkbox-label'][contains(text(), 'Sick Leave')]")
+    WebElement Sick_Leave;
+
+    @FindBy(xpath = "//h3[normalize-space(text())='Leave Carry Forward *']")
+    WebElement Leave_Carry_Forward;
+
 
     public DEV_ENV_Bangladeshi_Employee_Create(WebDriver driver) {
         this.driver = driver;
@@ -174,7 +220,9 @@ public void create_employee() throws IOException, InterruptedException {
     Next.click();
     enteruseremail.sendKeys(useremail);
     countryField.click();
+    Thread.sleep(2000);
     countryselect.click();
+    Thread.sleep(2000);
     cantonField.click();
     selectCanton.click();
     cityfield.sendKeys(testData);
@@ -190,10 +238,35 @@ public void create_employee() throws IOException, InterruptedException {
     Telephone_Number.sendKeys("+880 1629889679");
     Thread.sleep(2000);
     Next.click();
+    YearMonth currentMonth = YearMonth.now().plusMonths(1);
+    int lastDate = currentMonth.lengthOfMonth();
+    System.out.println(lastDate);
 
+    WebElement hrTermElement = driver.findElement(By.xpath("//div[@class='term-name' and text()='HR Term 1']"));
 
+    // Scroll to the element using JavaScript
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", hrTermElement);
+    Thread.sleep(2000);
+    Hr_Start_button.click();
+    Click_Hr_Start_Date.click();
+    Hr_End_button.click();
+    nextMonthbutton.click();
+    driver.findElement(By.xpath("//button/div[normalize-space(text())='" + lastDate + "']")).click();
+    Employment_dropdown.click();
+    Select_Employment_Type.click();
+    Next.click();
+    Thread.sleep(2000);
+    Monday_Button.click();
+    Tuesday_Button.click();
+    Wednesday_Button.click();
+    Thursday_Button.click();
 
-
+    Sunday_Button.click();
+    Annual_Leave.click();
+    git sThread.sleep(1000);
+    Paternity_Leave.click();
+    Sick_Leave.click();
+    Next.click();
 
     File file = new File("testData.txt");
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
