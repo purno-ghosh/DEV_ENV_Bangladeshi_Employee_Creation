@@ -2,6 +2,7 @@ package Setup_All;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -18,7 +19,6 @@ public class Setup {
 
     @BeforeClass
     public void setup() throws IOException {
-        // Remove static declaration of driver
         configProperties = new Properties();
         InputStream fileInput = getClass().getClassLoader().getResourceAsStream("config.properties");
 
@@ -27,9 +27,17 @@ public class Setup {
         }
 
         configProperties.load(fileInput);
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--disable-gpu");
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+//        driver = new ChromeDriver();
+//        driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
         String baseUrl = configProperties.getProperty("url");
         driver.get(baseUrl);
     }
@@ -39,15 +47,11 @@ public class Setup {
     public void takeScreenshot(ITestResult result) throws IOException {
         Utils utils = new Utils(driver);  // Initialize your custom Utils class for taking screenshots
         if (ITestResult.FAILURE == result.getStatus()) {
-            // Take screenshot if the test fails
             utils.takeScreenShot("failure");
         } else if (ITestResult.SUCCESS == result.getStatus()) {
-            // Take screenshot if the test passes
             utils.takeScreenShot("success");
         }
     }
-
-
 //    @AfterClass
 //    public void close() {
 //        if (driver != null) {
