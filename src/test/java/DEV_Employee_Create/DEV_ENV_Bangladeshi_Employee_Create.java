@@ -148,7 +148,7 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
         joiningDate.click();
         int dateonly = Integer.parseInt(testData.split("-")[0]);
         System.out.println(dateonly);
-        driver.findElement(By.xpath("//div[normalize-space()='" + dateonly + "']")).click();
+        driver.findElement(By.xpath("//button/div[normalize-space(text())='" + dateonly + "']")).click();
         Employment_Location.click();
         Select_Employment_Location.click();
         clickUnit.click();
@@ -171,7 +171,9 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
         enteruseremail.sendKeys(useremail);
         countryField.click();
         Thread.sleep(2000);
-        countryselect.click();
+        String country=Setup.getConfigData("country");
+        driver.findElement(By.xpath("//mat-option/span[normalize-space()='" + country+ "']")).click();
+        //countryselect.click();
         Thread.sleep(2000);
         cantonField.click();
         selectCanton.click();
