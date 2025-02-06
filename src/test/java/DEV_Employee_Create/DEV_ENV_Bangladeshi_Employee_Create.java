@@ -109,7 +109,7 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
     WebElement Confirm_Hr_Term;
     @FindBy(xpath = "(//input[@placeholder=\"Search\"])[1]")
     WebElement Unit_Search;
-    @FindBy(xpath = "//span[contains(.,'Business Manager RTL')]")
+    @FindBy(xpath = "//span[contains(.,'Head of Technology')]")
     WebElement Select_Role;
     @FindBy(xpath = "//span[normalize-space(text())=\"Finish\"]")
     WebElement Click_Finish;
