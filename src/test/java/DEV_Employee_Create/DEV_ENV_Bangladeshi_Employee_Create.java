@@ -139,7 +139,7 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
         Add_Employee.click();
         Salutation.click();
         Salutation_select.click();
-        userfirstName.sendKeys("AutoTest");
+        userfirstName.sendKeys("German");
         userlastName.sendKeys(testData);
         WebElement element = driver.findElement(By.xpath("//mat-select[@formcontrolname='LanguagePreference']"));
         Actions actions = new Actions(driver);
@@ -150,7 +150,9 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
         System.out.println(dateonly);
         driver.findElement(By.xpath("//button/div[normalize-space(text())='" + dateonly + "']")).click();
         Employment_Location.click();
-        Select_Employment_Location.click();
+        String country=Setup.getConfigData("country");
+        driver.findElement(By.xpath("//span[normalize-space()='" + country + "']")).click();
+
         clickUnit.click();
         WebElement unitOption = driver.findElement(By.xpath("//span[normalize-space()='" + unit + "']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", unitOption);
@@ -171,7 +173,7 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
         enteruseremail.sendKeys(useremail);
         countryField.click();
         Thread.sleep(2000);
-        String country=Setup.getConfigData("country");
+
         driver.findElement(By.xpath("//mat-option/span[normalize-space()='" + country+ "']")).click();
         //countryselect.click();
         Thread.sleep(2000);
@@ -226,7 +228,7 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
         Thread.sleep(1000);
         Annual_Leave.click();
         Thread.sleep(1000);
-        Paternity_Leave.click();
+        //Paternity_Leave.click();
         Sick_Leave.click();
         Next.click();
         Unit_Search.sendKeys(unit);
