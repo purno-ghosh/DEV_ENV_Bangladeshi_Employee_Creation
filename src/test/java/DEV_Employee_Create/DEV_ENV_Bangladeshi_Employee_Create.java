@@ -125,11 +125,11 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
 
         ZoneId bangladeshZone = ZoneId.of("Asia/Dhaka");
         ZonedDateTime bangladeshDateTime = ZonedDateTime.now(bangladeshZone);
-        String testData = bangladeshDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yy-HH-mm"));
+        String testData = bangladeshDateTime.format(DateTimeFormatter.ofPattern("ddMMyyHHmm"));
         System.out.println(testData);
         String lastName = testData;
         String employeeId = testData;
-        String useremail = testData + "@yopmail.com";
+        String useremail = "bd"+ testData + "@yopmail.com";
         String email = Setup.getConfigData("userEmail");
         String password = Setup.getConfigData("password");
         String  unit= Setup.getConfigData("unit");
@@ -139,14 +139,14 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
         Add_Employee.click();
         Salutation.click();
         Salutation_select.click();
-        userfirstName.sendKeys("German");
+        userfirstName.sendKeys("BDTest");
         userlastName.sendKeys(testData);
         WebElement element = driver.findElement(By.xpath("//mat-select[@formcontrolname='LanguagePreference']"));
         Actions actions = new Actions(driver);
         actions.moveToElement(element).perform();
         Thread.sleep(2000);
         joiningDate.click();
-        int dateonly = Integer.parseInt(testData.split("-")[0]);
+        int dateonly = Integer.parseInt(testData.substring(0,2));
         System.out.println(dateonly);
         driver.findElement(By.xpath("//button/div[normalize-space(text())='" + dateonly + "']")).click();
         Employment_Location.click();
@@ -159,7 +159,7 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
         Thread.sleep(2000);
         unitOption.click();
         Thread.sleep(2000);
-        Designation.sendKeys(testData);
+        Designation.sendKeys("automation"+testData);
         gender.click();
         selectgender.click();
         EmployeeID.sendKeys(testData);
@@ -228,7 +228,7 @@ public class DEV_ENV_Bangladeshi_Employee_Create {
         Thread.sleep(1000);
         Annual_Leave.click();
         Thread.sleep(1000);
-        //Paternity_Leave.click();
+        Paternity_Leave.click();
         Sick_Leave.click();
         Next.click();
         Unit_Search.sendKeys(unit);
